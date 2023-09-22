@@ -3,7 +3,7 @@ package com.mitocode.security;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
-import javax.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.ClientBuilder;
 
 public class KeyCloakConfig {
     public static Keycloak keycloak = null;
