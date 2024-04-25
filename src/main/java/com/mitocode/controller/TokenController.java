@@ -16,7 +16,7 @@ public class TokenController {
 
     @PostMapping(value = "/user/add")
     public ResponseEntity<Boolean> createUser(@RequestBody User user) throws Exception {
-        boolean rpta = keycloakService.addUser(user);
+        var rpta = keycloakService.addUser(user);
         return new ResponseEntity<>(rpta, HttpStatus.OK);
     }
 }

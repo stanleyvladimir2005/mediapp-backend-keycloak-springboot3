@@ -7,7 +7,6 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
 import java.util.Locale;
 
 @Configuration
@@ -16,7 +15,7 @@ public class MessageConfig {
     // Carga los properties
     @Bean
     public MessageSource messageSource(){
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        var messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:messages");
         return messageSource;
     }
@@ -24,7 +23,7 @@ public class MessageConfig {
     // Establece un default locale
     @Bean
     public LocaleResolver localeResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
+        var slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.ROOT);
         return slr;
     }
@@ -32,7 +31,7 @@ public class MessageConfig {
     // Para resolver las variables en messages
     @Bean
     public LocalValidatorFactoryBean getValidator() {
-        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        var bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
     }

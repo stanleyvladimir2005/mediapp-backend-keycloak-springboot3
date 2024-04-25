@@ -14,8 +14,7 @@ public class KeyCloakConfig {
     public final static String clientSecret = "sNZ7TT49tV8kJyxEcfH2zboBJq4llxNj"; //necesario en confidencial
     public final static String password = "123";
 
-    public KeyCloakConfig() {
-    }
+    public KeyCloakConfig() {}
 
     public static Keycloak getInstance(){
         if(keycloak == null){

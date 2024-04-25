@@ -1,7 +1,6 @@
 package com.mitocode.controller;
 
 import com.mitocode.dto.ConsultExamDTO;
-import com.mitocode.model.ConsultExam;
 import com.mitocode.service.IConsultExamService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
-
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -28,7 +25,7 @@ public class ConsultExamController {
 	
 	@GetMapping(value = "/{idConsult}")
 	public ResponseEntity<List<ConsultExamDTO>> getConsultsById(@PathVariable("idConsult") Integer idConsult) {
-		List<ConsultExam> consultaExamen = service.listExamByConsult(idConsult);
+		var consultaExamen = service.listExamByConsult(idConsult);
 		List<ConsultExamDTO> lstDTO = mapper.map(consultaExamen, new TypeToken<List<ConsultExamDTO>>() {}.getType());
 		return new ResponseEntity<>(lstDTO, OK);
 	}

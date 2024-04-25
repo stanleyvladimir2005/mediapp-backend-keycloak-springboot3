@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -28,7 +27,7 @@ public class ResetMail {
     private LocalDateTime expiration;
 
     public void setExpiration(int minutes) {
-        LocalDateTime today = LocalDateTime.now();
+        var today = LocalDateTime.now();
         this.expiration = today.plusMinutes(minutes);
     }
 

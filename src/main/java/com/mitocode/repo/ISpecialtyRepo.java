@@ -4,5 +4,4 @@ import com.mitocode.model.Specialty;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ISpecialtyRepo extends IGenericRepo<Specialty, Integer> {
-}
+public interface ISpecialtyRepo extends IGenericRepo<Specialty, Integer> {}

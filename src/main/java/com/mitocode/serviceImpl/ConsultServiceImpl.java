@@ -10,13 +10,10 @@ import com.mitocode.service.IConsultService;
 import jakarta.transaction.Transactional;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +54,7 @@ public class ConsultServiceImpl extends CRUDImpl<Consult,Integer>  implements IC
 	public List<ConsultProductDTO> callProcedureOrFunction() {
 		List<ConsultProductDTO> consultas = new ArrayList<>();
 		repo.callProcedureOrFunction().forEach( x -> {
-			ConsultProductDTO cr = new ConsultProductDTO();
+			var cr = new ConsultProductDTO();
 			cr.setQuantity(Integer.parseInt(String.valueOf(x[0])));
 			cr.setConsultdate(String.valueOf(x[1]));
 			consultas.add(cr);
@@ -69,12 +66,10 @@ public class ConsultServiceImpl extends CRUDImpl<Consult,Integer>  implements IC
 	public byte[] generateReport() {
 		byte[] data = null;
 		try {
-			File file = new ClassPathResource("/reports/consultas.jasper").getFile();
-			JasperPrint print = JasperFillManager.fillReport(file.getPath(), null, new JRBeanCollectionDataSource(this.callProcedureOrFunction()));
+			var file = new ClassPathResource("/reports/consultas.jasper").getFile();
+			var print = JasperFillManager.fillReport(file.getPath(), null, new JRBeanCollectionDataSource(this.callProcedureOrFunction()));
 			data = JasperExportManager.exportReportToPdf(print);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		}catch(Exception _) {}
 		return data;
 	}
 }
