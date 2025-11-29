@@ -4,14 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Data
 @Entity
 @Table(name ="patient")
-@SQLDelete(sql = "UPDATE patient SET status = false WHERE id_patient = ?")
-@Where(clause = "status = true")
 public class Patient {
 
 	@Id
