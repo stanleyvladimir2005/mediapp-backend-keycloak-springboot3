@@ -1,0 +1,11 @@
+.gradle
+build
+out
+.idea
+.vscode
+*.iml
+*.iws
+*.ipr
+.env
+docker/postgres/data
+docker/keycloak/data

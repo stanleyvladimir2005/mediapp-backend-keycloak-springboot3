@@ -1,6 +1,8 @@
 package com.mitocode.controller;
 
-import com.mitocode.security.KeyCloakConfig;
+import lombok.RequiredArgsConstructor;
+import org.keycloak.admin.client.Keycloak;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +11,17 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/mail")
+@RequiredArgsConstructor
 public class MailController {
 
-    //KeyCloak
+    private final Keycloak keycloak;
+
+    @Value("${keycloak.admin.realm}")
+    private String realm;
+
     @PostMapping(value = "/sendMail", consumes = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<Integer> sendMailKeycloak(@RequestBody String username) {
-        var usersResource = KeyCloakConfig.getInstance().realm(KeyCloakConfig.realm).users();
+        var usersResource = keycloak.realm(realm).users();
         var lista = usersResource.search(username, true);
         var rpta = lista.isEmpty();
         if (!rpta) {
@@ -26,15 +33,14 @@ public class MailController {
         return new ResponseEntity<>(0, HttpStatus.OK);
     }
 
-
-    // KeyCloak
     @PostMapping("/logout")
     public void logout(@RequestBody String username) {
-        var usersResource = KeyCloakConfig.getInstance().realm(KeyCloakConfig.realm).users();
-        var user = usersResource.search(username, true).getFirst();
+        var usersResource = keycloak.realm(realm).users();
+        var lista = usersResource.search(username, true);
+        if (lista.isEmpty()) {
+            return;
+        }
+        var user = lista.getFirst();
         usersResource.get(user.getId()).logout();
-
-        //Cerrar sesion al iniciar y luego poder iniciar, con eso limito a 1 sesion activa, es decir mato a todos para permitir al nuevo
-        //RealmResource realmResource = KeyCloakConfig.getInstance("").realm(KeyCloakConfig.realm).clients().get("mediapp-backend").getUserSessions(firstResult, maxResults)
     }
 }

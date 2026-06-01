@@ -2,19 +2,28 @@ package com.mitocode.serviceImpl;
 
 import java.util.Collections;
 import com.mitocode.service.IKeyCloakService;
+import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.mitocode.security.KeyCloakConfig;
 import com.mitocode.model.User;
 
 @Service
 public class KeyCloakServiceImpl implements IKeyCloakService {
 
+    private final Keycloak keycloak;
+    private final String realm;
+
+    public KeyCloakServiceImpl(Keycloak keycloak, @Value("${keycloak.admin.realm}") String realm) {
+        this.keycloak = keycloak;
+        this.realm = realm;
+    }
+
     @Override
     public boolean addUser(User user) {
-        var realmResource = KeyCloakConfig.getInstance().realm(KeyCloakConfig.realm);
+        var realmResource = keycloak.realm(realm);
         var usersResource = realmResource.users();
         var lista = usersResource.search(user.getUsername(), true);
         var rpta = lista.isEmpty();
